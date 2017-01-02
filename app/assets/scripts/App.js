@@ -1,6 +1,6 @@
-import $ from 'jquery';
+var $ = require('jquery');
 
-$(document).ready(function() {
+$( document ).ready(function() {
 
 $("<h1>").text("CHANGED");
 

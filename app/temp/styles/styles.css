@@ -1,16 +1,10 @@
 body {
-    background-color: #2f5572;
-    -webkit-columns: 300px 2;
-       -moz-columns: 300px 2;
-            columns: 300px 2;
-}
 
+}
+.my-div {
+    display: absolute;
+    background-color: #d59541;
+}
 h1 {
-    color: white;
-    font-size: 25px;
-}
-
-.box a {
-    display: block;
-    padding: 10px;
+    color: blue;
 }

@@ -1,19 +1,18 @@
 $mainBlue: #2f5572;
+$mainOrange: #d59541;
+
 
 body {
-    background-color: $mainBlue;
-    columns: 300px 2;
+
+}
+
+
+
+.my-div {
+    display: absolute;
+    background-color: $mainOrange;
 }
 
 h1 {
-    color: white;
-    font-size: 25px;
-}
-
-.box {
-    a {
-    display: block;
-    padding: 10px;
-
-    }
+    color: blue;
 }

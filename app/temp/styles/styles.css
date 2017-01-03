@@ -1,10 +1,11 @@
-body {
-
-}
 .my-div {
-    display: absolute;
     background-color: #d59541;
 }
 h1 {
     color: blue;
+}
+@media (min-width: 530px) {
+    h1 {
+        color: red;
+    }
 }

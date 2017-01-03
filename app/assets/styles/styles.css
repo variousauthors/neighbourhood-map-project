@@ -1,18 +1,16 @@
-$mainBlue: #2f5572;
-$mainOrange: #d59541;
-
-
-body {
-
-}
-
+@import "base/_global";
+@import "base/_variables";
+@import "base/_mixins";
 
 
 .my-div {
-    display: absolute;
     background-color: $mainOrange;
 }
 
 h1 {
     color: blue;
+
+    @mixin atSmall {
+        color: red;
+    }
 }

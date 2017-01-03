@@ -1,9 +1,8 @@
 var $ = require('jquery');
 
-$( document ).ready(function() {
+alert("ABC321");
 
-$("<h1>").text("CHANGED");
 
-console.log("test");
+$("h1").remove();
 
-});
+console.log()

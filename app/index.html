@@ -4,7 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
-    <title> Template </title>
+    <title> Nick's Neighbourhood Map </title>
 
 <!-- build:css assets/styles/styles.css -->
 <link rel="stylesheet" href="temp/styles/styles.css">
@@ -14,16 +14,96 @@
 
 <body>
 
-<div class="my-div">
-
-<h1 class="heading"> This is myy template </h1>
-
-<p> This is a template project </p>
-
+<div id="map">
 </div>
 
-<!-- build:js assets/scripts/scripts.js -->
+
+
+<script>
+     var map;
+
+     // Create a new blank array for all the listing markers.
+     var markers = [];
+
+
+     function initMap() {
+        // Constructor creates a new map - only center and zoom are required.
+          map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 45.5294134, lng: -73.6087074},
+                zoom: 13
+           });
+
+            // These are the real estate listings that will be shown to the user.
+            // Normally we'd have these in a database instead.
+
+          var locations = [
+            {title: 'St-Viateur Bagel', location: {lat: 45.526075, lng: -73.6054533}},
+            {title: 'Temps libre Mile-End', location: {lat:45.5283049, lng: -73.5980465}},
+            {title: 'Théâtre Rialto', location: {lat:45.5236231, lng: -73.6069876 }},
+            {title: 'Ubisoft Montreal', location: {lat:45.5258607, lng: -73.60076 }},
+            {title: 'Marché Jean-Talon', location: {lat:45.5364641, lng:-73.6239877}},
+
+          ];
+
+          var largeInfowindow = new google.maps.InfoWindow();
+          var bounds = new google.maps.LatLngBounds();
+
+          //the following group uses the location array to create an array of markets on initialize
+          for (var i = 0; i < locations.length; i++) {
+          // Get the position from the location array.
+          var position = locations[i].location;
+          var title = locations[i].title;
+          // Create a marker per location, and put into markers array.
+          var marker = new google.maps.Marker({
+            map: map,
+            position: position,
+            title: title,
+            animation: google.maps.Animation.DROP,
+            id: i
+          });
+
+
+          //Push the market to our array of markers
+          markers.push(marker);
+
+          bounds.extend(marker.position);
+
+          marker.addListener('click', function() {
+            populateInfoWindow(this, largeInfowindow);
+          });
+
+        }
+
+          map.fitBounds(bounds);
+
+
+          // This function populates the infowindow when the marker is clicked. We'll only allow
+      // one infowindow which will open at the marker that is clicked, and populate based
+      // on that markers position.
+          function populateInfoWindow(marker, infowindow) {
+            // Check to make sure the infowindow is not already opened on this marker.
+            if (infowindow.marker != marker) {
+              infowindow.marker = marker;
+              infowindow.setContent('<div>' + marker.title + '</div>');
+              infowindow.open(map, marker);
+              // Make sure the marker property is cleared if the infowindow is closed.
+              infowindow.addListener('closeclick',function(){
+                infowindow.setMarker = null;
+              });
+            }
+
+        }
+    }
+
+
+</script>
+
+
 <script src="temp/scripts/App.js"> </script>
-<!-- build: endbuild -->
+
+<script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA56O00SWz5jCIbOA4AHsa9Ei5_ObpQlV8&v=3&callback=initMap">
+</script>
+
 </body>
 

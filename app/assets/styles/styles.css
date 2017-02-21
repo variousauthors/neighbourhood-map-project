@@ -2,14 +2,14 @@
 @import "base/_variables";
 @import "base/_mixins";
 
+html, body { height: 100%; margin: 0; padding: 0; }
+
+#map { height: 100%; }
+
 p {
     padding: 10px;
 }
 
-
-.my-div {
-    background-color: $mainOrange;
-}
 
 h1 {
     color: blue;

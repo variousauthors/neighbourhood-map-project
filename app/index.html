@@ -91,17 +91,8 @@ var largeInfowindow = new google.maps.InfoWindow();
           // Create an onclick event to open the large infowindow at each marker.
           marker.addListener('click', function() {
             populateInfoWindow(this, largeInfowindow);
-            toggleBounce(i);
+            toggleBounce(this);
           });
-
-          //Create Bounce animation
-            function toggleBounce(num) {
-            if (marker[num].getAnimation() !== null) {
-              marker[num].setAnimation(null);
-            } else {
-              marker[num].setAnimation(google.maps.Animation.BOUNCE);
-            }
-           }
 
           // Two event listeners - one for mouseover, one for mouseout,
           // to change the colors back and forth.
@@ -132,6 +123,18 @@ var largeInfowindow = new google.maps.InfoWindow();
           });
         }
       }
+
+     //Create Bounce animation
+     function toggleBounce(marker) {
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+            //makes animation stop after 3 bounces
+            setTimeout(function(){ marker.setAnimation(null); }, 2100);
+        }
+
+       }
 
       // This function will loop through the markers array and display them all.
       function showListings() {

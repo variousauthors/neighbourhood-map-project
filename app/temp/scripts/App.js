@@ -57,7 +57,6 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	__webpack_require__(5);
-	__webpack_require__(6);
 
 /***/ },
 /* 1 */
@@ -16217,163 +16216,58 @@
 
 	var _knockout = __webpack_require__(2);
 
-	var _knockout2 = _interopRequireDefault(_knockout);
+	var _knockout3 = _interopRequireDefault(_knockout);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Location = function Location(data) {
-	    this.title = _knockout2.default.observable(data.title);
-	    this.location = _knockout2.default.observable(data.location);
+	    this.title = _knockout3.default.observable(data.title);
+	    this.location = _knockout3.default.observable(data.location);
 	}; /* WTF not working? import ko from 'knockout'; */
 
 
 	var AppViewModel = function AppViewModel() {
 	    var self = this;
 
-	    this.filter = _knockout2.default.observable();
-
-	    this.locationList = _knockout2.default.observableArray([]);
+	    this.locationList = _knockout3.default.observableArray([]);
 
 	    locations.forEach(function (locItem) {
 	        self.locationList.push(new Location(locItem));
 	    });
 
-	    this.currentLocation = _knockout2.default.observable(this.locationList()[0]);
+	    this.currentLocation = _knockout3.default.observable(this.locationList()[0]);
 	};
 
+	var vm = new AppViewModel();
+	_knockout2.default.applyBindings(vm);
+
+	/*AppViewModel.filteredItems = ko.computed(function() {
+	      var filter = filter().toLowerCase();
+	      if (!filter) {
+	          return this.locationList();
+	      } else {
+	          return ko.utils.arrayFilter(this.locationList(), function(item) {
+	              //return ko.utils.stringStartsWith(item.lastName().toLowerCase(), filter);
+	              return (item.title().toLowerCase().indexOf(filter) > -1);
+	          });
+	      }
+
+	  }, AppViewModel);*/
+
 	AppViewModel.filteredItems = _knockout2.default.computed(function () {
-	    var filter = filter().toLowerCase();
+	    var filter = this.filter().toLowerCase(); // <- here
 	    if (!filter) {
 	        return this.locationList();
 	    } else {
-	        return _knockout2.default.utils.arrayFilter(this.locationList(), function (item) {
+	        return _knockout3.default.utils.arrayFilter(this.locationList(), function (item) {
 	            //return ko.utils.stringStartsWith(item.lastName().toLowerCase(), filter);
 	            return item.title().toLowerCase().indexOf(filter) > -1;
 	        });
 	    }
-	}, AppViewModel);
+	}, vm); // <- here
 
-	_knockout2.default.applyBindings(new AppViewModel());
 
-/***/ },
-/* 6 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	var map;
-	// Create a new blank array for all the listing markers.
-	var markers = [];
-	function initMap() {
-	  //creates custome styles for map
-	  var styles = [{ "elementType": "geometry", "stylers": [{ "hue": "#ff4400" }, { "saturation": -68 }, { "lightness": -4 }, { "gamma": 0.72 }] }, { "featureType": "road", "elementType": "labels.icon" }, { "featureType": "landscape.man_made", "elementType": "geometry", "stylers": [{ "hue": "#0077ff" }, { "gamma": 3.1 }] }, { "featureType": "water", "stylers": [{ "hue": "#00ccff" }, { "gamma": 0.44 }, { "saturation": -33 }] }, { "featureType": "poi.park", "stylers": [{ "hue": "#44ff00" }, { "saturation": -23 }] }, { "featureType": "water", "elementType": "labels.text.fill", "stylers": [{ "hue": "#007fff" }, { "gamma": 0.77 }, { "saturation": 65 }, { "lightness": 99 }] }, { "featureType": "water", "elementType": "labels.text.stroke", "stylers": [{ "gamma": 0.11 }, { "weight": 5.6 }, { "saturation": 99 }, { "hue": "#0091ff" }, { "lightness": -86 }] }, { "featureType": "transit.line", "elementType": "geometry", "stylers": [{ "lightness": -48 }, { "hue": "#ff5e00" }, { "gamma": 1.2 }, { "saturation": -23 }] }, { "featureType": "transit", "elementType": "labels.text.stroke", "stylers": [{ "saturation": -64 }, { "hue": "#ff9100" }, { "lightness": 16 }, { "gamma": 0.47 }, { "weight": 2.7 }] }];
-	  // Constructor creates a new map - only center and zoom are required.
-	  map = new google.maps.Map(document.getElementById('map'), {
-	    center: { lat: 45.5294134, lng: -73.6087074 },
-	    zoom: 13,
-	    styles: styles,
-	    mayTypeControl: false
-	  });
-	  // These are the real estate listings that will be shown to the user.
-	  // Normally we'd have these in a database instead.
-	  //TODO: Turn this into an observable Array?
-	  /*var locations = [
-	    {title: 'St-Viateur Bagel', location: {lat: 45.526075, lng: -73.6054533}},
-	    {title: 'Temps libre Mile-End', location: {lat:45.5283049, lng: -73.5980465}},
-	    {title: 'Théâtre Rialto', location: {lat:45.5236231, lng: -73.6069876 }},
-	    {title: 'Ubisoft Montreal', location: {lat:45.5258607, lng: -73.60076 }},
-	    {title: 'Marché Jean-Talon', location: {lat:45.5364641, lng:-73.6239877}},
-	  ];*/
-	  var largeInfowindow = new google.maps.InfoWindow();
-	  // Style the markers a bit. This will be our listing marker icon.
-	  var defaultIcon = makeMarkerIcon('bf2f03');
-	  // Create a "highlighted location" marker color for when the user
-	  // mouses over the marker.
-	  var highlightedIcon = makeMarkerIcon('ed1509');
-	  var largeInfowindow = new google.maps.InfoWindow();
-	  // The following group uses the location array to create an array of markers on initialize.
-	  for (var i = 0; i < locations.length; i++) {
-	    // Get the position from the location array.
-	    var position = locations[i].location;
-	    var title = locations[i].title;
-	    // Create a marker per location, and put into markers array.
-	    var marker = new google.maps.Marker({
-	      position: position,
-	      title: title,
-	      animation: google.maps.Animation.DROP,
-	      icon: defaultIcon,
-	      id: i
-	    });
-	    // Push the marker to our array of markers.
-	    markers.push(marker);
-	    // Create an onclick event to open the large infowindow at each marker.
-	    marker.addListener('click', function () {
-	      populateInfoWindow(this, largeInfowindow);
-	      toggleBounce(this);
-	    });
-	    // Two event listeners - one for mouseover, one for mouseout,
-	    // to change the colors back and forth.
-	    marker.addListener('mouseover', function () {
-	      this.setIcon(highlightedIcon);
-	    });
-	    marker.addListener('mouseout', function () {
-	      this.setIcon(defaultIcon);
-	    });
-	  }
-	  document.getElementById('show-listings').addEventListener('click', showListings);
-	  document.getElementById('hide-listings').addEventListener('click', hideListings);
-	}
-
-	// This function populates the infowindow when the marker is clicked. We'll only allow
-	// one infowindow which will open at the marker that is clicked, and populate based
-	// on that markers position.
-	function populateInfoWindow(marker, infowindow) {
-	  // Check to make sure the infowindow is not already opened on this marker.
-	  if (infowindow.marker != marker) {
-	    infowindow.marker = marker;
-	    infowindow.setContent('<div>' + marker.title + '</div>');
-	    infowindow.open(map, marker);
-	    // Make sure the marker property is cleared if the infowindow is closed.
-	    infowindow.addListener('closeclick', function () {
-	      infowindow.marker = null;
-	    });
-	  }
-	}
-	//Create Bounce animation
-	function toggleBounce(marker) {
-	  if (marker.getAnimation() !== null) {
-	    marker.setAnimation(null);
-	  } else {
-	    marker.setAnimation(google.maps.Animation.BOUNCE);
-	    //makes animation stop after 3 bounces
-	    setTimeout(function () {
-	      marker.setAnimation(null);
-	    }, 2100);
-	  }
-	}
-	// This function will loop through the markers array and display them all.
-	function showListings() {
-	  var bounds = new google.maps.LatLngBounds();
-	  // Extend the boundaries of the map for each marker and display the marker
-	  for (var i = 0; i < markers.length; i++) {
-	    markers[i].setMap(map);
-	    bounds.extend(markers[i].position);
-	  }
-	  map.fitBounds(bounds);
-	}
-	// This function will loop through the listings and hide them all.
-	function hideListings() {
-	  for (var i = 0; i < markers.length; i++) {
-	    markers[i].setMap(null);
-	  }
-	}
-	// This function takes in a COLOR, and then creates a new marker
-	// icon of that color. The icon will be 21 px wide by 34 high, have an origin
-	// of 0, 0 and be anchored at 10, 34).
-	function makeMarkerIcon(markerColor) {
-	  var markerImage = new google.maps.MarkerImage('http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|' + markerColor + '|40|_|%E2%80%A2', new google.maps.Size(21, 34), new google.maps.Point(0, 0), new google.maps.Point(10, 34), new google.maps.Size(21, 34));
-	  return markerImage;
-	}
+	/*ko.applyBindings(new AppViewModel());*/
 
 /***/ }
 /******/ ]);

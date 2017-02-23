@@ -16229,6 +16229,8 @@
 	var AppViewModel = function AppViewModel() {
 	    var self = this;
 
+	    this.filter = _knockout3.default.observable('');
+
 	    this.locationList = _knockout3.default.observableArray([]);
 
 	    locations.forEach(function (locItem) {

@@ -9,6 +9,8 @@ var Location = function(data) {
 var AppViewModel = function() {
     var self = this;
 
+    this.filter = ko.observable('');
+
     this.locationList = ko.observableArray([]);
 
     locations.forEach(function(locItem) {
@@ -20,8 +22,10 @@ var AppViewModel = function() {
 
 }
 
+
 var  vm = new AppViewModel();
 _knockout2.default.applyBindings(vm);
+
 
 /*AppViewModel.filteredItems = ko.computed(function() {
       var filter = filter().toLowerCase();
@@ -47,7 +51,6 @@ AppViewModel.filteredItems = _knockout2.default.computed(function () {
           });
       }
 }, vm); // <- here
-
 
 
 /*ko.applyBindings(new AppViewModel());*/

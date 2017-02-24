@@ -21,11 +21,21 @@
           <input id="show-listings" type="button" value="Show Listings">
           <input id="hide-listings" type="button" value="Hide Listings">
           <!-- TEST TEST -->
+            <div class="search" id="search">
+                <input class="search-box" id="search-box" data-bind="textInput: searchTerm, valueUpdate: 'afterkeydown'" />
+            </div>
+<!--
+          <ul class="results" id="results" data-bind= data-bind="foreach: locationList">
+            <li data-bind="text: title"> </li>
+          </ul>
+
+          -->
+
           <ul data-bind= "foreach: locationList">
             <li data-bind="text: title"> </li>
           </ul>
 
-          <p>Filter: <input data-bind="value: filter, valueUpdate: 'afterkeydown'" /></p>
+
 
         </div>
       </div>
@@ -39,7 +49,9 @@
 <script src="temp/scripts/App.js"></script>
 
 <!--<script src="./assets/scripts/modules/AppViewModel.js"></script> -->
+
 <script src="./assets/scripts/modules/Map.js"></script>
+
 <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyA56O00SWz5jCIbOA4AHsa9Ei5_ObpQlV8&v=3&callback=initMap"></script>
 
 </body>

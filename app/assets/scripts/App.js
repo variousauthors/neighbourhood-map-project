@@ -1,4 +1,15 @@
 import $ from 'jquery';
 import ko from 'knockout';
 
-require('./modules/AppViewModel');
+
+import'./modules/Map';
+import'./modules/AppViewModel';
+
+var app || {};
+
+$(function() {
+    app.initMap = initMap();
+
+});
+
+

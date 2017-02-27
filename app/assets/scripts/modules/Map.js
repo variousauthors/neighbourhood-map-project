@@ -214,8 +214,6 @@ function toggleBounce(marker) {
     }
 }
 
-
-
 // This function will loop through the markers array and display them all.
 function showListings() {
     var bounds = new google.maps.LatLngBounds();

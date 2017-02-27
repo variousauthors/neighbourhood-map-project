@@ -26,12 +26,10 @@ var AppViewModel = function() {
 
 var vm = new AppViewModel();
 
-ko.applyBindings(vm);
+AppViewModel.prototype.filteredItems = ko.computed( function() {
+    var self = this;
 
-
-AppViewModel.filteredItems = ko.default.computed( function() {
-
-    console.log(locationList.title);
+    //console.log(self.locationList.title);
     var filter = self.searchTerm().toLowerCase();
     if (!filter) {
         self.locationList().forEach(function(locationItem){
@@ -42,7 +40,7 @@ AppViewModel.filteredItems = ko.default.computed( function() {
     } else {
       return ko.utils.arrayFilter(self.locationList(), function(locationItem) {
 
-        var string = locationItem.title.toLowerCase();
+        var string = locationItem.title().toLowerCase();
         var result = (string.search(filter) >= 0);
         locationItem.visible(result);
         return result;
@@ -50,4 +48,4 @@ AppViewModel.filteredItems = ko.default.computed( function() {
     }
   }, vm);
 
-
+ko.applyBindings(vm);

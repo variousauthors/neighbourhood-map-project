@@ -16244,11 +16244,10 @@
 
 	var vm = new AppViewModel();
 
-	_knockout2.default.applyBindings(vm);
+	AppViewModel.prototype.filteredItems = _knockout2.default.computed(function () {
+	    var self = this;
 
-	AppViewModel.filteredItems = _knockout2.default.default.computed(function () {
-
-	    console.log(locationList.title);
+	    //console.log(self.locationList.title);
 	    var filter = self.searchTerm().toLowerCase();
 	    if (!filter) {
 	        self.locationList().forEach(function (locationItem) {
@@ -16258,13 +16257,15 @@
 	    } else {
 	        return _knockout2.default.utils.arrayFilter(self.locationList(), function (locationItem) {
 
-	            var string = locationItem.title.toLowerCase();
+	            var string = locationItem.title().toLowerCase();
 	            var result = string.search(filter) >= 0;
 	            locationItem.visible(result);
 	            return result;
 	        });
 	    }
 	}, vm);
+
+	_knockout2.default.applyBindings(vm);
 
 /***/ }
 /******/ ]);

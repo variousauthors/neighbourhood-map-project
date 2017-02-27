@@ -25,7 +25,7 @@
                 <input class="search-box" id="search-box" data-bind="textInput: searchTerm, valueUpdate: 'afterkeydown'" />
             </div>
 <
-          <ul class="results" id="results" data-bind="foreach: filtereditems">
+          <ul class="results" id="results" data-bind="foreach: filteredItems">
             <li data-bind="text: title"> </li>
           </ul>
 
@@ -50,11 +50,7 @@
 
 <script src="temp/scripts/App.js"></script>
 
-<script>
 
-ko.applyBindings(vm);
-
-</script>
 
 <!--
 <script src="./assets/scripts/modules/AppViewModel.js"></script> -->

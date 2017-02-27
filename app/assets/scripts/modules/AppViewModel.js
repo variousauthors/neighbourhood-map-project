@@ -24,9 +24,12 @@ var AppViewModel = function() {
 
 }
 
+var vm = new AppViewModel();
 
-/*
-AppViewModel.filteredList = ko.computed( function() {
+ko.applyBindings(vm);
+
+
+AppViewModel.filteredItems = ko.default.computed( function() {
 
     console.log(locationList.title);
     var filter = self.searchTerm().toLowerCase();
@@ -45,12 +48,6 @@ AppViewModel.filteredList = ko.computed( function() {
         return result;
       });
     }
-  }, self);
-*/
-
-function startApp() {
-
-ko.applyBindings(new AppViewModel());
-}
+  }, vm);
 
 

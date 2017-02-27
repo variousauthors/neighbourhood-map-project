@@ -21,19 +21,20 @@
           <input id="show-listings" type="button" value="Show Listings">
           <input id="hide-listings" type="button" value="Hide Listings">
           <!-- TEST TEST -->
-            <div class="search" id="search">
+           <div class="search" id="search">
                 <input class="search-box" id="search-box" data-bind="textInput: searchTerm, valueUpdate: 'afterkeydown'" />
             </div>
-<!--
-          <ul class="results" id="results" data-bind= data-bind="foreach: locationList">
+<
+          <ul class="results" id="results" data-bind="foreach: filtereditems">
             <li data-bind="text: title"> </li>
           </ul>
 
-          -->
 
+          <!--
           <ul data-bind= "foreach: locationList">
             <li data-bind="text: title"> </li>
           </ul>
+          -->
 
 
 
@@ -44,11 +45,20 @@
     </div>
 </div>
 
+
 <script src="./assets/scripts/modules/Locations.js"></script>
 
 <script src="temp/scripts/App.js"></script>
 
-<!--<script src="./assets/scripts/modules/AppViewModel.js"></script> -->
+<script>
+
+ko.applyBindings(vm);
+
+</script>
+
+<!--
+<script src="./assets/scripts/modules/AppViewModel.js"></script> -->
+
 
 <script src="./assets/scripts/modules/Map.js"></script>
 

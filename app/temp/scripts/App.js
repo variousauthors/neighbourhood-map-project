@@ -16220,17 +16220,19 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	/*var Marker = function(data) {
+
+	}*/
+
 	var Location = function Location(data) {
 	    this.title = _knockout2.default.observable(data.title);
 	    this.location = _knockout2.default.observable(data.location);
 
 	    this.visible = _knockout2.default.observable(true);
+
+	    this.visibleMarkers = _knockout2.default.observableArray([]);
 	}; /* WTF not working? import ko from 'knockout'; */
 
-
-	var Marker = function Marker() {
-	    this.visble = _knockout2.default.observable(true);
-	};
 
 	var AppViewModel = function AppViewModel() {
 	    var self = this;
@@ -16238,8 +16240,6 @@
 	    this.searchTerm = _knockout2.default.observable("");
 
 	    this.locationList = _knockout2.default.observableArray([]);
-
-	    this.markerList = _knockout2.default.observableArray([]);
 
 	    locations.forEach(function (locationItem) {
 	        self.locationList.push(new Location(locationItem));
@@ -16255,28 +16255,32 @@
 
 	    //console.log(self.locationList.title);
 	    var filter = self.searchTerm().toLowerCase();
+
 	    if (!filter) {
+
 	        self.locationList().forEach(function (locationItem) {
 	            locationItem.visible(true);
 	        });
 
 	        return self.locationList();
 	    } else {
-	        for (var i = 0; i < self.locationList().length; i++) {
-	            var currentMarker = markers[i].title.toLowerCase();
-
-	            if (currentMarker.includes(filter)) {
-	                markers[i].setVisible(true);
-	            } else {
-	                markers[i].setVisible(false);
-	            }
-	        }
 
 	        return _knockout2.default.utils.arrayFilter(self.locationList(), function (locationItem) {
 
 	            var string = locationItem.title().toLowerCase();
 	            var result = string.search(filter) >= 0;
+	            console.log(result);
 	            locationItem.visible(result);
+
+	            for (var i = 0; i < self.locationList().length; i++) {
+	                var currentMarker = markers[i].title.toLowerCase();
+
+	                if (currentMarker.includes(filter)) {
+	                    markers[i].setVisible(true);
+	                } else {
+	                    markers[i].setVisible(false);
+	                }
+	            };
 
 	            return result;
 	        });

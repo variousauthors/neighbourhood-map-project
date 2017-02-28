@@ -1,15 +1,18 @@
 /* WTF not working? import ko from 'knockout'; */
 import ko from 'knockout';
 
+/*var Marker = function(data) {
+
+}*/
+
 var Location = function(data) {
     this.title = ko.observable(data.title);
     this.location = ko.observable(data.location);
 
     this.visible = ko.observable(true);
-}
 
-var Marker = function() {
-    this.visble = ko.observable(true);
+
+    this.visibleMarkers = ko.observableArray([]);
 }
 
 var AppViewModel = function() {
@@ -18,8 +21,6 @@ var AppViewModel = function() {
     this.searchTerm = ko.observable("");
 
     this.locationList = ko.observableArray([]);
-
-    this.markerList = ko.observableArray([]);
 
     locations.forEach(function(locationItem) {
         self.locationList.push(new Location(locationItem));
@@ -37,29 +38,37 @@ AppViewModel.prototype.filteredItems = ko.computed( function() {
 
     //console.log(self.locationList.title);
     var filter = self.searchTerm().toLowerCase();
+
     if (!filter) {
+
         self.locationList().forEach(function(locationItem){
         locationItem.visible(true);
         });
 
+
+
       return self.locationList();
     } else {
-        for (var i = 0; i < self.locationList().length; i++) {
-            var currentMarker = markers[i].title.toLowerCase();
-
-            if (currentMarker.includes(filter)) {
-                markers[i].setVisible(true);
-            } else {
-                markers[i].setVisible(false);
-            }
-        }
-
 
       return ko.utils.arrayFilter(self.locationList(), function(locationItem) {
 
         var string = locationItem.title().toLowerCase();
         var result = (string.search(filter) >= 0);
-        locationItem.visible(result)
+        console.log(result);
+        locationItem.visible(result);
+
+        for (var i = 0; i < self.locationList().length; i++) {
+                var currentMarker = markers[i].title.toLowerCase();
+
+                if(currentMarker.includes(filter)) {
+                    markers[i].setVisible(true);
+                } else {
+                    markers[i].setVisible(false);
+                }
+            };
+
+
+
 
         return result;
       });

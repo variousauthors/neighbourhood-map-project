@@ -16223,8 +16223,15 @@
 	var Location = function Location(data) {
 	    this.title = _knockout2.default.observable(data.title);
 	    this.location = _knockout2.default.observable(data.location);
+	    this.wikiArticle = _knockout2.default.observable();
 
 	    this.visible = _knockout2.default.observable(true);
+	};
+
+	var Marker = function Marker(data) {
+	    this.title = _knockout2.default.observable(data.title);
+	    this.visible = _knockout2.default.observable(data.visible);
+	    this.id = _knockout2.default.observable(data.id);
 	};
 
 	var AppViewModel = function AppViewModel() {
@@ -16238,6 +16245,8 @@
 	        self.locationList.push(new Location(locationItem));
 	    });
 
+	    this.articleArray = _knockout2.default.observable([]);
+
 	    this.currentLocation = _knockout2.default.observable(this.locationList()[0]);
 	};
 
@@ -16246,14 +16255,20 @@
 	AppViewModel.prototype.filteredItems = _knockout2.default.computed(function () {
 	    var self = this;
 
-	    //console.log(self.locationList.title);
 	    var filter = self.searchTerm().toLowerCase();
 
 	    if (!filter) {
 
 	        self.locationList().forEach(function (locationItem) {
+
 	            locationItem.visible(true);
 	        });
+
+	        for (var i = 0; i < self.locationList().length; i++) {
+	            if (markers.length > 0) {
+	                markers[i].setVisible(true);
+	            }
+	        }
 
 	        return self.locationList();
 	    } else {
@@ -16262,7 +16277,6 @@
 
 	            var string = locationItem.title().toLowerCase();
 	            var result = string.search(filter) >= 0;
-	            console.log(result);
 	            locationItem.visible(result);
 
 	            for (var i = 0; i < self.locationList().length; i++) {

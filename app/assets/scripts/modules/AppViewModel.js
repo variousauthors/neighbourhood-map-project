@@ -1,18 +1,11 @@
-/* WTF not working? import ko from 'knockout'; */
 import ko from 'knockout';
 
-/*var Marker = function(data) {
-
-}*/
 
 var Location = function(data) {
     this.title = ko.observable(data.title);
     this.location = ko.observable(data.location);
 
     this.visible = ko.observable(true);
-
-
-    this.visibleMarkers = ko.observableArray([]);
 }
 
 var AppViewModel = function() {

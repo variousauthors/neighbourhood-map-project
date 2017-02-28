@@ -16220,19 +16220,12 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	/*var Marker = function(data) {
-
-	}*/
-
 	var Location = function Location(data) {
 	    this.title = _knockout2.default.observable(data.title);
 	    this.location = _knockout2.default.observable(data.location);
 
 	    this.visible = _knockout2.default.observable(true);
-
-	    this.visibleMarkers = _knockout2.default.observableArray([]);
-	}; /* WTF not working? import ko from 'knockout'; */
-
+	};
 
 	var AppViewModel = function AppViewModel() {
 	    var self = this;

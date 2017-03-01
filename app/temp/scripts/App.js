@@ -16212,18 +16212,24 @@
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var _knockout = __webpack_require__(2);
 
 	var _knockout2 = _interopRequireDefault(_knockout);
 
+	var _Wikipedia = __webpack_require__(6);
+
+	var _Wikipedia2 = _interopRequireDefault(_Wikipedia);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var wikiSearch = "St-Viateur Bagel";
 
 	var Location = function Location(data) {
 	    this.title = _knockout2.default.observable(data.title);
 	    this.location = _knockout2.default.observable(data.location);
-	    this.wikiArticle = _knockout2.default.observable();
+	    this.wikiArticle = _knockout2.default.observableArray([]);
 
 	    this.visible = _knockout2.default.observable(true);
 	};
@@ -16245,7 +16251,21 @@
 	        self.locationList.push(new Location(locationItem));
 	    });
 
-	    this.articleArray = _knockout2.default.observable([]);
+	    this.locationList().forEach(function (locationItem) {
+	        var title = locationItem.title();
+	        var article = locationItem.wikiArticle();
+
+	        (0, _Wikipedia2.default)(title, article);
+
+	        console.log(article);
+
+	        //console.log(currentArticle);
+
+	        //var locArt = locationItem.wikiArticle(retreivedArticle);
+
+	        //console.log(title, article);
+
+	    });
 
 	    this.currentLocation = _knockout2.default.observable(this.locationList()[0]);
 	};
@@ -16295,6 +16315,54 @@
 	}, vm);
 
 	_knockout2.default.applyBindings(vm);
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _jquery = __webpack_require__(1);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function loadWikiData(search, article) {
+	    ///WIKIPEDIA API
+
+
+	    var wikiRequestTimeout = setTimeout(function () {
+	        //$wikiElem.text("failed to get wikpedia resources");
+	    }, 8000);
+
+	    var wikiLink = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + search + '&format=json';
+	    //console.log("wikiLink: "+wikiLink);
+
+	    _jquery2.default.ajax(wikiLink, {
+	        dataType: 'jsonp'
+	    }).done(function (data) {
+	        //console.log(data);
+
+	        for (var i = 0; i < data.length; i++) {
+	            var wikiHeader = data[1][i];
+	            var wikiArticleURL = data[3][i];
+	            var formattedLink = '<a href="' + wikiArticleURL + '">' + wikiHeader + '</a>';
+
+	            if (wikiArticleURL != undefined) {
+	                article.push(formattedLink);
+	            }
+	        };
+
+	        clearTimeout(wikiRequestTimeout);
+	    });
+	};
+
+	exports.default = loadWikiData;
 
 /***/ }
 /******/ ]);

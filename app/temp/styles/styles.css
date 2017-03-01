@@ -8,6 +8,8 @@ html,
 .container {
         height: 100%;
         position: relative;
+
+
       }
 input {
         font-size: 12px;
@@ -38,6 +40,7 @@ h1 {
         padding: 10px 10px 30px 10px;
         text-align: left;
         width: 340px;
+
       }
 #pano {
         width: 200px;

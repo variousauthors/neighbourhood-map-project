@@ -1,11 +1,12 @@
 import ko from 'knockout';
+import loadWikiData from '../modules/Wikipedia';
 
-
+var wikiSearch = "St-Viateur Bagel";
 
 var Location = function(data) {
     this.title = ko.observable(data.title);
     this.location = ko.observable(data.location);
-    this.wikiArticle = ko.observable();
+    this.wikiArticle = ko.observableArray([]);
 
     this.visible = ko.observable(true);
 
@@ -28,14 +29,32 @@ var AppViewModel = function() {
         self.locationList.push(new Location(locationItem));
     });
 
-    this.articleArray = ko.observable([]);
+    this.locationList().forEach(function(locationItem) {
+        var title = locationItem.title();
+        var article = locationItem.wikiArticle();
+
+        loadWikiData(title, article);
+
+        console.log(article);
+
+        //console.log(currentArticle);
+
+        //var locArt = locationItem.wikiArticle(retreivedArticle);
+
+        //console.log(title, article);
+
+
+    });
 
     this.currentLocation = ko.observable(this.locationList()[0]);
 
 
 }
 
+
 var vm = new AppViewModel();
+
+
 
 AppViewModel.prototype.filteredItems = ko.computed( function() {
     var self = this;
@@ -54,6 +73,7 @@ AppViewModel.prototype.filteredItems = ko.computed( function() {
         for (var i = 0; i < self.locationList().length; i++) {
         if (markers.length > 0) {
             markers[i].setVisible(true);
+
             }
         }
 
@@ -66,24 +86,25 @@ AppViewModel.prototype.filteredItems = ko.computed( function() {
         var result = (string.search(filter) >= 0);
         locationItem.visible(result);
 
-      for (var i = 0; i < self.locationList().length; i++) {
-        var currentMarker = markers[i].title.toLowerCase();
 
-        if(currentMarker.includes(filter)) {
-            markers[i].setVisible(true);
-        } else {
-            markers[i].setVisible(false);
-        }
-    };
+
+      for (var i = 0; i < self.locationList().length; i++) {
+            var currentMarker = markers[i].title.toLowerCase();
+
+            if(currentMarker.includes(filter)) {
+                markers[i].setVisible(true);
+            } else {
+                markers[i].setVisible(false);
+            }
+        };
 
 
 
         return result;
       });
     }
+
   }, vm);
-
-
 
 
 ko.applyBindings(vm);

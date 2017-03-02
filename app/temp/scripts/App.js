@@ -16251,20 +16251,11 @@
 	        self.locationList.push(new Location(locationItem));
 	    });
 
-	    this.locationList().forEach(function (locationItem) {
+	    self.locationList().forEach(function (locationItem) {
 	        var title = locationItem.title();
 	        var article = locationItem.wikiArticle();
 
 	        (0, _Wikipedia2.default)(title, article);
-
-	        console.log(article);
-
-	        //console.log(currentArticle);
-
-	        //var locArt = locationItem.wikiArticle(retreivedArticle);
-
-	        //console.log(title, article);
-
 	    });
 
 	    this.currentLocation = _knockout2.default.observable(this.locationList()[0]);
@@ -16282,6 +16273,8 @@
 	        self.locationList().forEach(function (locationItem) {
 
 	            locationItem.visible(true);
+
+	            console.log('BLAH');
 	        });
 
 	        for (var i = 0; i < self.locationList().length; i++) {

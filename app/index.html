@@ -16,7 +16,7 @@
 
 <div class="container">
       <div class="options-box">
-        <h1>Mile End/ Little italy</h1>
+        <h1>Mile End/ Little Italy</h1>
         <div>
           <input id="show-listings" type="button" value="Show Listings">
           <input id="hide-listings" type="button" value="Hide Listings">
@@ -24,11 +24,15 @@
            <div class="search" id="search">
                 <input class="search-box" id="search-box" data-bind="textInput: searchTerm, valueUpdate: 'afterkeydown'" />
             </div>
-<
           <ul class="results" id="results" data-bind="foreach: filteredItems">
             <li data-bind="text: title"></li>
-            <p data-bind="html: wikiArticle"></p>
+            <ul data-bind="foreach: wikiArticle">
+              <li data-bind="html: $data"></li>
+            </ul>
+
+
           </ul>
+
 
 
           <!--

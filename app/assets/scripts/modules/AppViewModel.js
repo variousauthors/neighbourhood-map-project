@@ -27,26 +27,20 @@ var AppViewModel = function() {
 
     locations.forEach(function(locationItem) {
         self.locationList.push(new Location(locationItem));
+
     });
 
-    this.locationList().forEach(function(locationItem) {
+    self.locationList().forEach(function(locationItem) {
         var title = locationItem.title();
         var article = locationItem.wikiArticle();
 
         loadWikiData(title, article);
 
-        console.log(article);
-
-        //console.log(currentArticle);
-
-        //var locArt = locationItem.wikiArticle(retreivedArticle);
-
-        //console.log(title, article);
-
-
     });
 
+
     this.currentLocation = ko.observable(this.locationList()[0]);
+
 
 
 }
@@ -67,6 +61,8 @@ AppViewModel.prototype.filteredItems = ko.computed( function() {
         self.locationList().forEach(function(locationItem){
 
             locationItem.visible(true);
+
+            console.log('BLAH');
 
         });
 
@@ -97,7 +93,6 @@ AppViewModel.prototype.filteredItems = ko.computed( function() {
                 markers[i].setVisible(false);
             }
         };
-
 
 
         return result;

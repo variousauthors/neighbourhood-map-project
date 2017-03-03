@@ -54,9 +54,32 @@
 
 	var _knockout2 = _interopRequireDefault(_knockout);
 
-	__webpack_require__(5);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var app = app || {};
+
+	//import'./modules/Map';
+	//import'./modules/Test';
+	//import'./modules/AppViewModel';
+
+
+	(0, _jquery2.default)(function () {
+
+	    var map;
+
+	    app.initMap = function () {
+	        map = new google.maps.Map(document.getElementById('map'), {
+	            center: { lat: 40.7413549, lng: -73.998024 },
+	            zoom: 13
+	        });
+	    };
+
+	    app.test = function () {
+	        console.log("test successful");
+	    };
+
+	    app.test();
+	});
 
 /***/ },
 /* 1 */
@@ -16207,155 +16230,6 @@
 
 	module.exports = function() { throw new Error("define cannot be used indirect"); };
 
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _knockout = __webpack_require__(2);
-
-	var _knockout2 = _interopRequireDefault(_knockout);
-
-	var _Wikipedia = __webpack_require__(6);
-
-	var _Wikipedia2 = _interopRequireDefault(_Wikipedia);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var wikiSearch = "St-Viateur Bagel";
-
-	var Location = function Location(data) {
-	    this.title = _knockout2.default.observable(data.title);
-	    this.location = _knockout2.default.observable(data.location);
-	    this.wikiArticle = _knockout2.default.observableArray([]);
-
-	    this.visible = _knockout2.default.observable(true);
-	};
-
-	var Marker = function Marker(data) {
-	    this.title = _knockout2.default.observable(data.title);
-	    this.visible = _knockout2.default.observable(data.visible);
-	    this.id = _knockout2.default.observable(data.id);
-	};
-
-	var AppViewModel = function AppViewModel() {
-	    var self = this;
-
-	    this.searchTerm = _knockout2.default.observable("");
-
-	    this.locationList = _knockout2.default.observableArray([]);
-
-	    locations.forEach(function (locationItem) {
-	        self.locationList.push(new Location(locationItem));
-	    });
-
-	    self.locationList().forEach(function (locationItem) {
-	        var title = locationItem.title();
-	        var article = locationItem.wikiArticle();
-
-	        (0, _Wikipedia2.default)(title, article);
-	    });
-
-	    this.currentLocation = _knockout2.default.observable(this.locationList()[0]);
-	};
-
-	var vm = new AppViewModel();
-
-	AppViewModel.prototype.filteredItems = _knockout2.default.computed(function () {
-	    var self = this;
-
-	    var filter = self.searchTerm().toLowerCase();
-
-	    if (!filter) {
-
-	        self.locationList().forEach(function (locationItem) {
-
-	            locationItem.visible(true);
-
-	            console.log('BLAH');
-	        });
-
-	        for (var i = 0; i < self.locationList().length; i++) {
-	            if (markers.length > 0) {
-	                markers[i].setVisible(true);
-	            }
-	        }
-
-	        return self.locationList();
-	    } else {
-
-	        return _knockout2.default.utils.arrayFilter(self.locationList(), function (locationItem) {
-
-	            var string = locationItem.title().toLowerCase();
-	            var result = string.search(filter) >= 0;
-	            locationItem.visible(result);
-
-	            for (var i = 0; i < self.locationList().length; i++) {
-	                var currentMarker = markers[i].title.toLowerCase();
-
-	                if (currentMarker.includes(filter)) {
-	                    markers[i].setVisible(true);
-	                } else {
-	                    markers[i].setVisible(false);
-	                }
-	            };
-
-	            return result;
-	        });
-	    }
-	}, vm);
-
-	_knockout2.default.applyBindings(vm);
-
-/***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _jquery = __webpack_require__(1);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function loadWikiData(search, article) {
-	    ///WIKIPEDIA API
-
-
-	    var wikiRequestTimeout = setTimeout(function () {
-	        //$wikiElem.text("failed to get wikpedia resources");
-	    }, 8000);
-
-	    var wikiLink = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + search + '&format=json';
-	    //console.log("wikiLink: "+wikiLink);
-
-	    _jquery2.default.ajax(wikiLink, {
-	        dataType: 'jsonp'
-	    }).done(function (data) {
-	        //console.log(data);
-
-	        for (var i = 0; i < data.length; i++) {
-	            var wikiHeader = data[1][i];
-	            var wikiArticleURL = data[3][i];
-	            var formattedLink = '<a href="' + wikiArticleURL + '">' + wikiHeader + '</a>';
-
-	            if (wikiArticleURL != undefined) {
-	                article.push(formattedLink);
-	            }
-	        };
-
-	        clearTimeout(wikiRequestTimeout);
-	    });
-	};
-
-	exports.default = loadWikiData;
 
 /***/ }
 /******/ ]);

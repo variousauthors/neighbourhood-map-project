@@ -1,9 +1,12 @@
+
 var map;
 
 // Create a new blank array for all the listing markers.
 var markers = [];
 
- var initMap = function() {
+
+
+var initMap = function() {
     //creates custome styles for map
 
     var styles = [{

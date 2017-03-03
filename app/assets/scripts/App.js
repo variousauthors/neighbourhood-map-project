@@ -9,8 +9,6 @@ import ko from 'knockout';
 //import'./modules/AppViewModel';
 
 
-
-
 $(function() {
 
     var map;
@@ -29,6 +27,8 @@ $(function() {
     };
 
     app.test();
+
+    app.initMap();
 
 });
 

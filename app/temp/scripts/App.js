@@ -79,6 +79,8 @@
 	    };
 
 	    app.test();
+
+	    app.initMap();
 	});
 
 /***/ },

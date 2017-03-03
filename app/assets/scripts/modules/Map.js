@@ -1,12 +1,12 @@
 
-var map;
+export var map;
 
 // Create a new blank array for all the listing markers.
-var markers = [];
+export var markers = [];
 
 
 
-var initMap = function() {
+export function initMap() {
     //creates custome styles for map
 
     var styles = [{
@@ -101,6 +101,7 @@ var initMap = function() {
         }]
     }];
     // Constructor creates a new map - only center and zoom are required.
+
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
             lat: 45.5294134,

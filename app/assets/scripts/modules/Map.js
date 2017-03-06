@@ -243,3 +243,8 @@ function makeMarkerIcon(markerColor) {
         new google.maps.Size(21, 34));
     return markerImage;
 }
+
+export default {
+    markers: markers,
+    initMap: initMap
+};

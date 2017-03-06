@@ -1,6 +1,11 @@
 import ko from 'knockout';
 import loadWikiData from '../modules/Wikipedia';
 
+import locations from './Locations';
+import map from './Map';
+
+var markers = map.markers;
+
 var wikiSearch = "St-Viateur Bagel";
 
 var Location = function(data) {
